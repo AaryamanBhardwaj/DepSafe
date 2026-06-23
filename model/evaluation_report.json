@@ -1,0 +1,63 @@
+{
+  "dataset_size": 524,
+  "class_balance": {
+    "maintained": 194,
+    "abandoned": 330
+  },
+  "train_size": 419,
+  "test_size": 105,
+  "accuracy": 0.981,
+  "precision": 0.9512,
+  "recall": 1.0,
+  "f1_score": 0.975,
+  "confusion_matrix": {
+    "TN": 64,
+    "FP": 2,
+    "FN": 0,
+    "TP": 39
+  },
+  "feature_importance": {
+    "commits_90d": 0.2087,
+    "commits_365d": 0.1393,
+    "commit_velocity_trend": 0.1745,
+    "contributors_total": 0.0223,
+    "contributors_90d": 0.1337,
+    "bus_factor": 0.0029,
+    "open_issues": 0.0022,
+    "closed_issues_90d": 0.049,
+    "issue_response_time_median": 0.0018,
+    "days_since_last_release": 0.044,
+    "release_frequency": 0.0082,
+    "release_regularity": 0.0124,
+    "weekly_downloads": 0.0013,
+    "download_trend": 0.0014,
+    "dependent_count": 0.0,
+    "has_readme": 0.0,
+    "has_license": 0.0,
+    "repo_stars": 0.0119,
+    "repo_open_prs": 0.001,
+    "days_since_last_commit": 0.1851
+  },
+  "features": [
+    "commits_90d",
+    "commits_365d",
+    "commit_velocity_trend",
+    "contributors_total",
+    "contributors_90d",
+    "bus_factor",
+    "open_issues",
+    "closed_issues_90d",
+    "issue_response_time_median",
+    "days_since_last_release",
+    "release_frequency",
+    "release_regularity",
+    "weekly_downloads",
+    "download_trend",
+    "dependent_count",
+    "has_readme",
+    "has_license",
+    "repo_stars",
+    "repo_open_prs",
+    "days_since_last_commit"
+  ]
+}

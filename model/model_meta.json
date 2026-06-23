@@ -1,0 +1,29 @@
+{
+  "features": [
+    "commits_90d",
+    "commits_365d",
+    "commit_velocity_trend",
+    "contributors_total",
+    "contributors_90d",
+    "bus_factor",
+    "open_issues",
+    "closed_issues_90d",
+    "issue_response_time_median",
+    "days_since_last_release",
+    "release_frequency",
+    "release_regularity",
+    "weekly_downloads",
+    "download_trend",
+    "dependent_count",
+    "has_readme",
+    "has_license",
+    "repo_stars",
+    "repo_open_prs",
+    "days_since_last_commit"
+  ],
+  "model_type": "RandomForestClassifier",
+  "n_estimators": 200,
+  "training_date": "2026-06-23T22:20:21.997487",
+  "dataset_size": 524,
+  "f1_score": 0.975
+}
