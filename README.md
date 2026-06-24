@@ -2,7 +2,6 @@
 
 ML-powered npm dependency health scoring with explainable predictions. Paste a package name, get a 0–100 health score backed by 20 live features, a trained Random Forest model, and SHAP-powered explanations showing exactly *why* — not just a number.
 
-**Live:** [https://d20gt3le9mm1ru.cloudfront.net](https://d20gt3le9mm1ru.cloudfront.net)
 
 ---
 
