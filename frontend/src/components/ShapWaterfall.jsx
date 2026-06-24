@@ -62,6 +62,7 @@ export default function ShapWaterfall({ impacts, maxFeatures = 10 }) {
           <XAxis
             type="number"
             domain={[-maxAbs * 1.2, maxAbs * 1.2]}
+            tickFormatter={v => v.toFixed(3)}
             tick={{ fill: '#64748b', fontSize: 11 }}
             axisLine={{ stroke: '#1e293b' }}
             tickLine={{ stroke: '#1e293b' }}
