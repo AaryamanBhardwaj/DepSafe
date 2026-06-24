@@ -151,24 +151,20 @@ def compare_packages(
 @app.get("/api/tree/{name:path}")
 def dependency_tree(name: str, depth: int = Query(default=2, ge=1, le=3)):
     """Resolve dependency tree and score each node."""
-    import requests as req
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import threading
 
     cache = {}
+    cache_lock = threading.Lock()
 
-    def resolve_deps(pkg_name: str, current_depth: int) -> dict:
-        if pkg_name in cache:
-            return cache[pkg_name]
-
+    def score_package(pkg_name: str) -> dict:
         node = {
             "name": pkg_name,
             "health_score": None,
             "risk_level": None,
             "verdict": None,
-            "dependencies": [],
             "error": None,
         }
-        cache[pkg_name] = node
-
         try:
             result = feat.fetch_features(pkg_name)
             prediction = predictor.predict(result["features"])
@@ -182,15 +178,41 @@ def dependency_tree(name: str, depth: int = Query(default=2, ge=1, le=3)):
             node["error"] = "rate_limit"
         except Exception:
             node["error"] = "fetch_failed"
+        return node
+
+    def resolve_deps(pkg_name: str, current_depth: int) -> dict:
+        with cache_lock:
+            if pkg_name in cache:
+                return cache[pkg_name]
+            node = {"name": pkg_name, "dependencies": []}
+            cache[pkg_name] = node
+
+        scored = score_package(pkg_name)
+        node.update(scored)
 
         if current_depth < depth:
             try:
                 npm_data = feat._npm_get(f"https://registry.npmjs.org/{pkg_name}/latest")
                 if npm_data:
-                    deps = npm_data.get("dependencies", {})
-                    for dep_name in list(deps.keys())[:15]:
-                        child = resolve_deps(dep_name, current_depth + 1)
-                        node["dependencies"].append(child)
+                    dep_names = list(npm_data.get("dependencies", {}).keys())[:15]
+                    with ThreadPoolExecutor(max_workers=8) as pool:
+                        futures = {}
+                        for dep_name in dep_names:
+                            with cache_lock:
+                                if dep_name in cache:
+                                    node["dependencies"].append(cache[dep_name])
+                                    continue
+                            futures[pool.submit(resolve_deps, dep_name, current_depth + 1)] = dep_name
+                        for future in as_completed(futures):
+                            try:
+                                child = future.result(timeout=25)
+                                node["dependencies"].append(child)
+                            except Exception:
+                                node["dependencies"].append({
+                                    "name": futures[future],
+                                    "health_score": None, "risk_level": None,
+                                    "verdict": None, "error": "timeout", "dependencies": [],
+                                })
             except Exception:
                 pass
 

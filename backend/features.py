@@ -113,7 +113,7 @@ def _gh_get(url: str, params: dict = None):
 
 def _npm_get(url: str):
     resp = NPM.get(url, timeout=15)
-    if resp.status_code == 404:
+    if resp.status_code in (404, 429):
         return None
     resp.raise_for_status()
     return resp.json()
