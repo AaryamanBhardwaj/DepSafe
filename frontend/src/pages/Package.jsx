@@ -121,7 +121,7 @@ export default function Package() {
       {/* Model Transparency */}
       <div className="border-t border-white/5 mt-8 pt-6 pb-12 text-center">
         <p className="text-slate-600 text-xs">
-          Prediction by RandomForestClassifier (200 trees) · Trained on 500+ npm packages · F1: 97.5% ·{' '}
+          Prediction by RandomForestClassifier (200 trees) · Trained on 1,725 npm packages · F1: 98.6% ·{' '}
           <a
             href="https://github.com/AaryamanBhardwaj/DepSafe/tree/main/model"
             target="_blank"

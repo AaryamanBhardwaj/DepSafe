@@ -23,7 +23,7 @@
   ],
   "model_type": "RandomForestClassifier",
   "n_estimators": 200,
-  "training_date": "2026-06-23T22:20:21.997487",
-  "dataset_size": 524,
-  "f1_score": 0.975
+  "training_date": "2026-06-24T14:05:29.845474",
+  "dataset_size": 1725,
+  "f1_score": 0.9864
 }

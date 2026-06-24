@@ -27,7 +27,7 @@ const STEPS = [
       </svg>
     ),
     title: 'Random Forest Model',
-    desc: 'Trained on >500 real npm packages with historical maintenance data. 200-tree ensemble with balanced class weights. F1: 97.5%.',
+    desc: 'Trained on 1,725 real npm packages with historical maintenance data. 200-tree ensemble with balanced class weights. F1: 98.6%.',
     gradient: 'from-purple-500/20 to-purple-500/5',
     border: 'border-purple-500/20',
     text: 'text-purple-400',
