@@ -8,7 +8,7 @@ import Nav from './components/Nav'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#0f172a]">
+    <div className="min-h-screen bg-[#050a12]">
       <Nav />
       <Routes>
         <Route path="/" element={<Landing />} />

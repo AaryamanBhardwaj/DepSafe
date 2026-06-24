@@ -27,10 +27,10 @@ function CustomTooltip({ active, payload }) {
   if (!active || !payload?.length) return null
   const d = payload[0].payload
   return (
-    <div className="bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm shadow-xl">
+    <div className="bg-[#0a1628] border border-cyan-500/15 rounded-lg px-3 py-2 text-sm shadow-xl backdrop-blur-sm">
       <p className="text-white font-medium">{d.label}</p>
-      <p className="text-slate-400">Value: {d.rawValue}</p>
-      <p style={{ color: d.shap > 0 ? '#22c55e' : '#ef4444' }}>
+      <p className="text-slate-500">Value: {d.rawValue}</p>
+      <p style={{ color: d.shap > 0 ? '#00ff9d' : '#ff3366' }}>
         Impact: {d.shap > 0 ? '+' : ''}{d.shap.toFixed(4)}
       </p>
     </div>
@@ -62,9 +62,9 @@ export default function ShapWaterfall({ impacts, maxFeatures = 10 }) {
           <XAxis
             type="number"
             domain={[-maxAbs * 1.2, maxAbs * 1.2]}
-            tick={{ fill: '#94a3b8', fontSize: 11 }}
-            axisLine={{ stroke: '#475569' }}
-            tickLine={{ stroke: '#475569' }}
+            tick={{ fill: '#64748b', fontSize: 11 }}
+            axisLine={{ stroke: '#1e293b' }}
+            tickLine={{ stroke: '#1e293b' }}
           />
           <YAxis
             type="category"
@@ -75,12 +75,12 @@ export default function ShapWaterfall({ impacts, maxFeatures = 10 }) {
             width={135}
           />
           <Tooltip content={<CustomTooltip />} cursor={false} />
-          <ReferenceLine x={0} stroke="#475569" />
+          <ReferenceLine x={0} stroke="#1e293b" />
           <Bar dataKey="shap" radius={[4, 4, 4, 4]} barSize={20}>
             {data.map((entry, i) => (
               <Cell
                 key={i}
-                fill={entry.shap > 0 ? '#22c55e' : '#ef4444'}
+                fill={entry.shap > 0 ? '#00ff9d' : '#ff3366'}
                 fillOpacity={0.8}
               />
             ))}

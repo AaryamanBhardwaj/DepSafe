@@ -17,23 +17,23 @@ function HealthNode({ data }) {
   const hasError = data.error
   const isRoot = data.isRoot
 
-  let bgColor = '#334155'
-  let borderColor = '#475569'
-  let textColor = '#94a3b8'
+  let bgColor = 'rgba(8,16,32,0.9)'
+  let borderColor = '#1e293b'
+  let textColor = '#64748b'
 
   if (score !== null && score !== undefined) {
     if (score >= 70) {
-      bgColor = 'rgba(34,197,94,0.15)'
-      borderColor = '#22c55e'
-      textColor = '#22c55e'
+      bgColor = 'rgba(0,255,157,0.08)'
+      borderColor = '#00ff9d'
+      textColor = '#00ff9d'
     } else if (score >= 40) {
-      bgColor = 'rgba(234,179,8,0.15)'
-      borderColor = '#eab308'
-      textColor = '#eab308'
+      bgColor = 'rgba(255,190,11,0.08)'
+      borderColor = '#ffbe0b'
+      textColor = '#ffbe0b'
     } else {
-      bgColor = 'rgba(239,68,68,0.15)'
-      borderColor = '#ef4444'
-      textColor = '#ef4444'
+      bgColor = 'rgba(255,51,102,0.08)'
+      borderColor = '#ff3366'
+      textColor = '#ff3366'
     }
   }
 
@@ -46,10 +46,10 @@ function HealthNode({ data }) {
         padding: '10px 16px',
         minWidth: 140,
         textAlign: 'center',
-        boxShadow: isRoot ? `0 0 20px ${borderColor}40` : undefined,
+        boxShadow: isRoot ? `0 0 25px ${borderColor}30` : `0 0 10px ${borderColor}15`,
       }}
     >
-      <Handle type="target" position={Position.Top} style={{ background: '#475569' }} />
+      <Handle type="target" position={Position.Top} style={{ background: '#1e293b' }} />
       <div style={{ fontFamily: 'monospace', color: '#f1f5f9', fontSize: 13, fontWeight: 600 }}>
         {data.label}
       </div>
@@ -64,7 +64,7 @@ function HealthNode({ data }) {
       ) : (
         <div style={{ color: '#64748b', fontSize: 11, marginTop: 4 }}>...</div>
       )}
-      <Handle type="source" position={Position.Bottom} style={{ background: '#475569' }} />
+      <Handle type="source" position={Position.Bottom} style={{ background: '#1e293b' }} />
     </div>
   )
 }
@@ -91,7 +91,7 @@ function buildGraph(tree, parentId = null, nodes = [], edges = [], pos = { x: 0,
       id: `${parentId}-${id}`,
       source: parentId,
       target: id,
-      style: { stroke: '#475569', strokeWidth: 1.5 },
+      style: { stroke: '#1e293b', strokeWidth: 1.5 },
       animated: tree.health_score !== null && tree.health_score < 40,
     })
   }
@@ -156,10 +156,10 @@ export default function TreeView() {
   if (error) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-8 max-w-md mx-auto">
+        <div className="card-glow rounded-xl p-8 max-w-md mx-auto border border-red-500/20">
           <p className="text-red-400 text-lg font-medium mb-2">Tree Analysis Failed</p>
-          <p className="text-slate-400 text-sm">{error}</p>
-          <Link to="/" className="inline-block mt-4 text-indigo-400 hover:text-indigo-300 text-sm">
+          <p className="text-slate-500 text-sm">{error}</p>
+          <Link to="/" className="inline-block mt-4 text-cyan-400 hover:text-cyan-300 text-sm">
             ← Try another package
           </Link>
         </div>
@@ -172,7 +172,7 @@ export default function TreeView() {
   return (
     <div className="h-[calc(100vh-56px)] flex flex-col">
       {/* Top summary bar */}
-      <div className="bg-slate-800/50 border-b border-slate-700 px-4 py-3">
+      <div className="bg-[#050a12]/90 backdrop-blur-md border-b border-cyan-500/10 px-4 py-3">
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-xl font-bold text-white font-mono">{name}</h1>
@@ -185,9 +185,9 @@ export default function TreeView() {
             {data.chain_health !== null && (
               <div className="text-center">
                 <div className="text-xs text-slate-500 uppercase tracking-wider">Chain Health</div>
-                <div className={`text-2xl font-bold ${
-                  data.chain_health >= 70 ? 'text-emerald-400' :
-                  data.chain_health >= 40 ? 'text-amber-400' : 'text-red-400'
+                <div className={`text-2xl font-bold neon-text ${
+                  data.chain_health >= 70 ? 'text-[#00ff9d]' :
+                  data.chain_health >= 40 ? 'text-[#ffbe0b]' : 'text-[#ff3366]'
                 }`}>
                   {data.chain_health}
                 </div>
@@ -199,7 +199,7 @@ export default function TreeView() {
                 <div className="text-xs text-slate-500 uppercase tracking-wider">Weakest Link</div>
                 <Link
                   to={`/package/${weakest.name}`}
-                  className="text-red-400 font-mono text-sm hover:text-red-300 no-underline"
+                  className="text-[#ff3366] font-mono text-sm hover:text-red-300 no-underline"
                 >
                   {weakest.name} ({weakest.health_score})
                 </Link>
@@ -210,7 +210,7 @@ export default function TreeView() {
 
         {data.summary && (
           <div className="max-w-6xl mx-auto mt-2">
-            <p className="text-sm text-amber-300/80 bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-1.5">
+            <p className="text-sm text-amber-300/80 bg-amber-500/5 border border-amber-500/15 rounded-lg px-3 py-1.5">
               {data.summary}
             </p>
           </div>
@@ -218,7 +218,7 @@ export default function TreeView() {
       </div>
 
       {/* Tree visualization */}
-      <div className="flex-1" style={{ background: '#0f172a' }}>
+      <div className="flex-1" style={{ background: '#050a12' }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -236,25 +236,25 @@ export default function TreeView() {
             }
           }}
         >
-          <Background color="#1e293b" gap={20} />
+          <Background color="#0a1628" gap={20} />
           <Controls
-            style={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8 }}
+            style={{ background: '#0a1628', border: '1px solid rgba(0,224,255,0.1)', borderRadius: 8 }}
           />
         </ReactFlow>
       </div>
 
       {/* Legend */}
-      <div className="bg-slate-800/50 border-t border-slate-700 px-4 py-2 flex items-center justify-center gap-6 text-xs text-slate-400">
+      <div className="bg-[#050a12]/90 backdrop-blur-md border-t border-cyan-500/10 px-4 py-2 flex items-center justify-center gap-6 text-xs text-slate-500">
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded bg-emerald-500/30 border border-emerald-500 inline-block" /> Healthy (70+)
+          <span className="w-3 h-3 rounded bg-[#00ff9d]/15 border border-[#00ff9d] inline-block" /> Healthy (70+)
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded bg-amber-500/30 border border-amber-500 inline-block" /> Declining (40-69)
+          <span className="w-3 h-3 rounded bg-[#ffbe0b]/15 border border-[#ffbe0b] inline-block" /> Declining (40-69)
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded bg-red-500/30 border border-red-500 inline-block" /> At Risk (&lt;40)
+          <span className="w-3 h-3 rounded bg-[#ff3366]/15 border border-[#ff3366] inline-block" /> At Risk (&lt;40)
         </span>
-        <span className="text-slate-600">|</span>
+        <span className="text-slate-700">|</span>
         <span>Click a node to view details</span>
       </div>
     </div>

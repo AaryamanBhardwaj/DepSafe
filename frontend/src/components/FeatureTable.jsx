@@ -23,19 +23,19 @@ const FEATURE_META = {
 
 function getBarColor(feature, value) {
   const meta = FEATURE_META[feature]
-  if (!meta) return '#6366f1'
-  if (meta.good === 'neutral') return '#6366f1'
+  if (!meta) return '#00e0ff'
+  if (meta.good === 'neutral') return '#00e0ff'
   if (feature === 'days_since_last_commit' || feature === 'days_since_last_release') {
-    if (value <= 30) return '#22c55e'
-    if (value <= 180) return '#eab308'
-    return '#ef4444'
+    if (value <= 30) return '#00ff9d'
+    if (value <= 180) return '#ffbe0b'
+    return '#ff3366'
   }
   if (feature === 'bus_factor') {
-    if (value <= 40) return '#22c55e'
-    if (value <= 70) return '#eab308'
-    return '#ef4444'
+    if (value <= 40) return '#00ff9d'
+    if (value <= 70) return '#ffbe0b'
+    return '#ff3366'
   }
-  return '#6366f1'
+  return '#00e0ff'
 }
 
 function getBarWidth(feature, value) {
@@ -64,10 +64,10 @@ export default function FeatureTable({ features }) {
           const barWidth = getBarWidth(key, value)
           const barColor = getBarColor(key, value)
           return (
-            <div key={key} className="grid grid-cols-[minmax(120px,200px)_60px_1fr] sm:grid-cols-[200px_80px_1fr] items-center gap-2 py-1.5 px-2 rounded hover:bg-slate-800/50 text-sm">
-              <span className="text-slate-300 truncate">{meta.label}</span>
-              <span className="text-white font-mono text-right">{formatted}</span>
-              <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
+            <div key={key} className="grid grid-cols-[minmax(120px,200px)_60px_1fr] sm:grid-cols-[200px_80px_1fr] items-center gap-2 py-1.5 px-2 rounded hover:bg-white/[0.02] text-sm transition-colors">
+              <span className="text-slate-400 truncate">{meta.label}</span>
+              <span className="text-slate-200 font-mono text-right">{formatted}</span>
+              <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${barWidth}%`, backgroundColor: barColor }}
